@@ -9,10 +9,10 @@ on:
 env:
   GITHUB_SHA: '${{github.sha}}' 
   GITHUB_REF: '${{github.ref}}'
-  IMAGE: 'python:3.7.13-slim'
+  IMAGE: 'golang:1.17'
   REGISTRY_HOSTNAME: 'gcr.io'
-  IMAGE_NAME: 'flask-helloworld'
-  PROJECT_NAME: 'modelpoc'
+  IMAGE_NAME: 'web-infra-template'
+  PROJECT_NAME: 'web-infra-template'
 
 
 jobs:
