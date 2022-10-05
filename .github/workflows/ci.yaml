@@ -54,5 +54,5 @@ jobs:
         export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
         echo $TAG
         docker push "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":"$TAG"
-        docker tag "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":"$TAG" "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":latest-"$TAG"
+        docker tag "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":"$TAG" "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":latest-"$TAG"
         docker push "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":latest-"$TAG"
