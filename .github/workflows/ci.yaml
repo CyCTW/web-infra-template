@@ -12,7 +12,7 @@ env:
   IMAGE: 'golang:1.17'
   REGISTRY_HOSTNAME: 'gcr.io'
   IMAGE_NAME: 'web-infra-template'
-  PROJECT_NAME: 'My First Project'
+  PROJECT_ID: 'high-apricot-364413'
 
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
       run: |
         export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
         echo $TAG
-        docker build -t "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":"$TAG" \
+        docker build -t "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":"$TAG" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
     # Push the Docker image to Google Container Registry
@@ -53,6 +53,6 @@ jobs:
       run: |
         export TAG=`echo $GITHUB_REF | awk -F/ '{print $NF}'`
         echo $TAG
-        docker push "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":"$TAG"
-        docker tag "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":"$TAG" "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":latest-"$TAG"
-        docker push "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":latest-"$TAG"
+        docker push "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":"$TAG"
+        docker tag "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":"$TAG" "$REGISTRY_HOSTNAME"/"$PROJECT_NAME"/"$IMAGE_NAME":latest-"$TAG"
+        docker push "$REGISTRY_HOSTNAME"/"$PROJECT_ID"/"$IMAGE_NAME":latest-"$TAG"
