@@ -12,7 +12,7 @@ env:
   IMAGE: 'golang:1.17'
   REGISTRY_HOSTNAME: 'gcr.io'
   IMAGE_NAME: 'web-infra-template'
-  PROJECT_NAME: 'web-infra-template'
+  PROJECT_NAME: 'My First Project'
 
 
 jobs:
