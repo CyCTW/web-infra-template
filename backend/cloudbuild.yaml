@@ -69,7 +69,7 @@ steps:
     echo "Updating image tag version ..."
     cd web-infra-template/base
     ls
-    sed -i "s|newTag: .*|newTag: $SHORT_SHA|" demo-app/overlays/develop/kustomization.yaml
+    sed -i "s|newTag: .*|newTag: $SHORT_SHA|" kustomization.yaml
     echo "Pushing changes to git config repo ..."
     git config --global user.name cyctw
     git config --global user.email zxcvbnmichael192@gmail.com
