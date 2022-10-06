@@ -48,7 +48,7 @@ steps:
   args:
   - '-c'
   - |
-    chmod 666 /builder/home/.ssh/id_github
+    chmod 600 /builder/home/.ssh/id_github
     cat <<EOF >/builder/home/.ssh/config
     Hostname github.com
     IdentityFile /builder/home/.ssh/id_github
@@ -66,6 +66,9 @@ steps:
   - |
     echo "Cloning repo ..."
     ls ~/.ssh
+    echo "Cloning repo ..."
+    cat ~/.ssh/id_github
+    cat ~/.ssh/config
     git clone --depth 1 git@github.com:CyCTW/web-manifests.git
     echo "Updating image tag version ..."
     cd web-manifests/web-infra-template/base
