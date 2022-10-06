@@ -67,7 +67,7 @@ steps:
     echo "Cloning repo ..."
     git clone --depth 1 https://github.com/CyCTW/web-manifests.git
     echo "Updating image tag version ..."
-    cd web-infra-template/base
+    cd web-manifests/web-infra-template/base
     ls
     sed -i "s|newTag: .*|newTag: $SHORT_SHA|" kustomization.yaml
     echo "Pushing changes to git config repo ..."
