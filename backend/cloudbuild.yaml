@@ -53,7 +53,6 @@ steps:
     Hostname github.com
     IdentityFile /home/builder/.ssh/id_github
     EOF
-    ssh-keyscan -t rsa github.com > /home/builder/.ssh/known_hosts
   volumes:
   - name: 'ssh'
     path: /home/builder/.ssh
