@@ -15,23 +15,23 @@
 # [START cloudbuild]
 steps:
 # This step builds the container image.
-- name: 'gcr.io/cloud-builders/docker'
-  id: Build
-  args:
-  - 'build'
-  - '-t'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/backend:$SHORT_SHA'
-  - '.'
-  dir: 'backend'
+# - name: 'gcr.io/cloud-builders/docker'
+#   id: Build
+#   args:
+#   - 'build'
+#   - '-t'
+#   - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/backend:$SHORT_SHA'
+#   - '.'
+#   dir: 'backend'
 
-# This step pushes the image to Artifact Registry
-# The PROJECT_ID and SHORT_SHA variables are automatically
-# replaced by Cloud Build.
-- name: 'gcr.io/cloud-builders/docker'
-  id: Push
-  args:
-  - 'push'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/backend:$SHORT_SHA'
+# # This step pushes the image to Artifact Registry
+# # The PROJECT_ID and SHORT_SHA variables are automatically
+# # replaced by Cloud Build.
+# - name: 'gcr.io/cloud-builders/docker'
+#   id: Push
+#   args:
+#   - 'push'
+#   - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/backend:$SHORT_SHA'
 # [END cloudbuild]
 
 # Access the id_github file from Secret Manager
@@ -49,10 +49,6 @@ steps:
   - '-c'
   - |
     chmod 600 /root/.ssh/id_github
-    cat <<EOF >/root/.ssh/config
-    Hostname github.com
-    IdentityFile /root/.ssh/id_github
-    EOF
     ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
   volumes:
   - name: 'ssh'
@@ -75,7 +71,7 @@ steps:
     git config --global user.email zxcvbnmiahel192@gmail.com
     git add -A
     git commit -m "Updated with build ${BUILD_ID} from ${REPO_NAME} commit ${COMMIT_SHA}"
-    git push origin master
+    git push origin production
   volumes:
   - name: 'ssh'
     path: /root/.ssh
