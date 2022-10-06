@@ -37,10 +37,10 @@ steps:
 # Access the id_github file from Secret Manager
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /home/builder/.ssh/id_github' ]
+  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /builder/home/.ssh/id_github' ]
   volumes:
   - name: 'ssh'
-    path: /home/builder/.ssh
+    path: /builder/home/.ssh
 
 # Set up git with key and domain
 - name: 'gcr.io/cloud-builders/git'
@@ -48,15 +48,15 @@ steps:
   args:
   - '-c'
   - |
-    chmod 666 /home/builder/.ssh/id_github
-    cat <<EOF >/home/builder/.ssh/config
+    chmod 666 /builder/home/.ssh/id_github
+    cat <<EOF >/builder/home/.ssh/config
     Hostname github.com
-    IdentityFile /home/builder/.ssh/id_github
+    IdentityFile /builder/home/.ssh/id_github
     EOF
-    ssh-keyscan -t rsa github.com > /home/builder/.ssh/known_hosts
+    ssh-keyscan -t rsa github.com > /builder/home/.ssh/known_hosts
   volumes:
   - name: 'ssh'
-    path: /home/builder/.ssh
+    path: /builder/home/.ssh
 
 # Edit Kustomize layer in config repo and push changes
 - name: gcr.io/cloud-builders/git
@@ -79,4 +79,4 @@ steps:
     git push origin production
   volumes:
   - name: 'ssh'
-    path: /home/builder/.ssh
+    path: /builder/home/.ssh
