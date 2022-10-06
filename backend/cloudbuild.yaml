@@ -37,7 +37,7 @@ steps:
 # Access the id_github file from Secret Manager
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > ~/.ssh/id_github' ]
+  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /home/builder/.ssh/id_github' ]
   volumes:
   - name: 'ssh'
     path: /home/builder/.ssh
@@ -48,12 +48,12 @@ steps:
   args:
   - '-c'
   - |
-    chmod 666 ~/.ssh/id_github
-    cat <<EOF >~/.ssh/config
+    chmod 666 /home/builder/.ssh/id_github
+    cat <<EOF >/home/builder/.ssh/config
     Hostname github.com
-    IdentityFile ~/.ssh/id_github
+    IdentityFile /home/builder/.ssh/id_github
     EOF
-    ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
+    ssh-keyscan -t rsa github.com > /home/builder/.ssh/known_hosts
   volumes:
   - name: 'ssh'
     path: /home/builder/.ssh
