@@ -37,26 +37,26 @@ steps:
 # Access the id_github file from Secret Manager
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > ~/.ssh/id_rsa' ]
+  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_github' ]
   volumes:
   - name: 'ssh'
-    path: ~/.ssh
+    path: /root/.ssh
 
 # Set up git with key and domain
-# - name: 'gcr.io/cloud-builders/git'
-#   entrypoint: 'bash'
-#   args:
-#   - '-c'
-#   - |
-#     chmod 600 /root/.ssh/id_github
-#     cat <<EOF >/root/.ssh/config
-#     Hostname github.com
-#     IdentityFile /root/.ssh/id_github
-#     EOF
-#     ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
-#   volumes:
-#   - name: 'ssh'
-#     path: /root/.ssh
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    chmod 400 /root/.ssh/id_github
+    cat <<EOF >/root/.ssh/config
+    Hostname github.com
+    IdentityFile /root/.ssh/id_github
+    EOF
+    ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
 
 # Edit Kustomize layer in config repo and push changes
 - name: gcr.io/cloud-builders/git
@@ -65,6 +65,8 @@ steps:
   - '-c'
   - |
     echo "Cloning repo ..."
+    ls ~/.ssh
+    ls /root/.ssh
     git clone --depth 1 https://github.com/CyCTW/web-manifests.git
     echo "Updating image tag version ..."
     cd web-manifests/web-infra-template/base
