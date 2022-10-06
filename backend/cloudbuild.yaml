@@ -65,7 +65,7 @@ steps:
   - '-c'
   - |
     echo "Cloning repo ..."
-    git clone --depth 1 git@github.com:CyCTW/web-manifests.git
+    git clone --depth 1 https://github.com/CyCTW/web-manifests.git
     echo "Updating image tag version ..."
     cd web-infra-template/base
     ls
