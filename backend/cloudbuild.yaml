@@ -37,7 +37,7 @@ steps:
 # Access the id_github file from Secret Manager
 - name: gcr.io/cloud-builders/gcloud
   entrypoint: 'bash'
-  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_github' ]
+  args: [ '-c', 'gcloud secrets versions access latest --secret=github-ssh-key > /root/.ssh/id_rsa' ]
   volumes:
   - name: 'ssh'
     path: /root/.ssh
@@ -48,7 +48,7 @@ steps:
   args:
   - '-c'
   - |
-    chmod 600 /root/.ssh/id_github
+    chmod 600 /root/.ssh/id_rsa
     ssh-keyscan -t rsa github.com > /root/.ssh/known_hosts
   volumes:
   - name: 'ssh'
@@ -61,7 +61,7 @@ steps:
   - '-c'
   - |
     echo "Cloning repo ..."
-    git clone --depth 1 git@github.com:CyCTW/web-manifests.git
+    git clone --depth 1 git@github.com:CyCTW/web-manifests
     echo "Updating image tag version ..."
     cd web-manifests/web-infra-template/base
     ls
