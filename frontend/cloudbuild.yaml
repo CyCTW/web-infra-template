@@ -20,9 +20,9 @@ steps:
   args:
   - 'build'
   - '-t'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/backend:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/frontend:$SHORT_SHA'
   - '.'
-  dir: 'backend'
+  dir: 'frontend'
 
 # This step pushes the image to Artifact Registry
 # The PROJECT_ID and SHORT_SHA variables are automatically
@@ -31,7 +31,7 @@ steps:
   id: Push
   args:
   - 'push'
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/backend:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-infra-template/frontend:$SHORT_SHA'
 # [END cloudbuild]
 
 # Access the id_github file from Secret Manager
@@ -67,7 +67,7 @@ steps:
     echo "Updating image tag version ..."
     cd web-manifests/web-infra-template/base
     ls
-    sed -i -z -e "s|backend\n  newTag: [a-zA-Z0-9]*\n|backend\n  newTag: $SHORT_SHA\n|" kustomization.yaml
+    sed -i -z -e "s|frontend\n  newTag: [a-zA-Z0-9]*\n|frontend\n  newTag: $SHORT_SHA\n|" kustomization.yaml
     echo "Pushing changes to git config repo ..."
     git config --global user.name cyctw
     git config --global user.email zxcvbnmiahel192@gmail.com

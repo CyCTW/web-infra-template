@@ -13,5 +13,5 @@ func main() {
 	router := gin.Default()
 	router.GET("/api", hello)
 
-	router.Run("localhost:8081")
+	router.Run()
 }
